@@ -11,11 +11,9 @@
 
 	$sql= "INSERT INTO tableKaryawan VALUES ('$nik','$nama','$alamat','$email','$tempatLahir','$tanggalLahir','$gender')";
 
-	if($conn->query($sql)===TRUE){
-		echo("Data telah ditambahakan");
-	}else{
-		echo("Tidak masuk database");
-	}
+	$conn->query($sql);
 ?>
-<br>
-<a href="Index.php">Back To Index</a>
+
+<script type="text/javascript">
+	window.location.href = "http://localhost/crud-php-2/Index.php";
+</script>
