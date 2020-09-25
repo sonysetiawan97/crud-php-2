@@ -1,9 +1,9 @@
 <?php
 	include 'connection.php';
 
-	$nik=$_GET['nik'];
+	$idKaryawan=$_GET['idKaryawan'];
 
-	mysqli_query($conn, "DELETE FROM tableKaryawan WHERE nik='$nik'");
+	mysqli_query($conn, "DELETE CASCADE FROM tableKaryawan WHERE idKaryawan='$idKaryawan'");
 ?>
 <br>
 

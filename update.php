@@ -1,7 +1,7 @@
 <?php
 	include 'connection.php';
 
-	$nik=$_POST['nik'];
+	$idKaryawan=$_POST['idKaryawan'];
     $nama=$_POST['nama'];
     $alamat=$_POST['alamat'];
     $email=$_POST['email'];
@@ -17,7 +17,7 @@
 		tempatLahir='$tempatLahir', 
 		tanggalLahir='$tanggalLahir',
 		gender='$gender'
-		WHERE nik='$nik'"
+		WHERE idKaryawan='$idKaryawan'"
 	);
 	
 	if($conn->query($sql)===TRUE){
@@ -26,4 +26,7 @@
 		echo("Tidak terupdate");
 	}
 ?>
-<br>
+
+<script type="text/javascript">
+	window.location.href = "http://localhost/crud-php-2/Index.php";
+</script>

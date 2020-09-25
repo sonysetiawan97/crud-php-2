@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2020 at 05:33 AM
+-- Generation Time: Sep 25, 2020 at 03:48 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `crudsagara`
+-- Database: `crud-php`
 --
 
 -- --------------------------------------------------------
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tablekaryawan` (
-  `NIK` varchar(10) NOT NULL,
+  `idKaryawan` int(11) NOT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `alamat` varchar(100) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
@@ -37,6 +37,17 @@ CREATE TABLE `tablekaryawan` (
   `tanggalLahir` date DEFAULT NULL,
   `gender` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Triggers `tablekaryawan`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_ChangeNIK` AFTER INSERT ON `tablekaryawan` FOR EACH ROW INSERT INTO tablenikkaryawan VALUES(
+    (SELECT idKaryawan FROM tablekaryawan WHERE idKaryawan = new.idKaryawan),(
+    SELECT CONCAT('k','',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%c')),'',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%m')),'',(SELECT lpad(`idKaryawan`, 5, '0') FROM `tablekaryawan` WHERE idKaryawan = new.idKaryawan)))) FROM tablekaryawan WHERE idKaryawan = new.idKaryawan
+))
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -57,7 +68,18 @@ CREATE TABLE `tablekeahlian` (
 
 CREATE TABLE `tablekeahliankaryawan` (
   `idKeahlian` int(11) NOT NULL,
-  `NIK` varchar(10) NOT NULL
+  `idKaryawan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tablenikkaryawan`
+--
+
+CREATE TABLE `tablenikkaryawan` (
+  `idKaryawan` int(11) DEFAULT NULL,
+  `nik` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -68,7 +90,7 @@ CREATE TABLE `tablekeahliankaryawan` (
 -- Indexes for table `tablekaryawan`
 --
 ALTER TABLE `tablekaryawan`
-  ADD PRIMARY KEY (`NIK`);
+  ADD PRIMARY KEY (`idKaryawan`);
 
 --
 -- Indexes for table `tablekeahlian`
@@ -81,22 +103,29 @@ ALTER TABLE `tablekeahlian`
 --
 ALTER TABLE `tablekeahliankaryawan`
   ADD KEY `idKeahlian` (`idKeahlian`),
-  ADD KEY `NIK` (`NIK`);
+  ADD KEY `idKaryawan` (`idKaryawan`);
+
+--
+-- Indexes for table `tablenikkaryawan`
+--
+ALTER TABLE `tablenikkaryawan`
+  ADD UNIQUE KEY `idKaryawan` (`idKaryawan`),
+  ADD UNIQUE KEY `nik` (`nik`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `tablekaryawan`
+--
+ALTER TABLE `tablekaryawan`
+  MODIFY `idKaryawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `tablekeahlian`
 --
 ALTER TABLE `tablekeahlian`
-  MODIFY `idKeahlian` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tablekeahliankaryawan`
---
-ALTER TABLE `tablekeahliankaryawan`
   MODIFY `idKeahlian` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -108,7 +137,13 @@ ALTER TABLE `tablekeahliankaryawan`
 --
 ALTER TABLE `tablekeahliankaryawan`
   ADD CONSTRAINT `tablekeahliankaryawan_ibfk_1` FOREIGN KEY (`idKeahlian`) REFERENCES `tablekeahlian` (`idKeahlian`),
-  ADD CONSTRAINT `tablekeahliankaryawan_ibfk_2` FOREIGN KEY (`NIK`) REFERENCES `tablekaryawan` (`NIK`);
+  ADD CONSTRAINT `tablekeahliankaryawan_ibfk_2` FOREIGN KEY (`idKaryawan`) REFERENCES `tablekaryawan` (`idKaryawan`);
+
+--
+-- Constraints for table `tablenikkaryawan`
+--
+ALTER TABLE `tablenikkaryawan`
+  ADD CONSTRAINT `tablenikkaryawan_ibfk_1` FOREIGN KEY (`idKaryawan`) REFERENCES `tablekaryawan` (`idKaryawan`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

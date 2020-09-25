@@ -5,9 +5,7 @@
 	<title>Test</title>
 	<link rel="stylesheet" href="style.css">
 	<?php include 'connection.php' ?>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<?php include 'indexStyle.php' ?>
 </head>
 
 <body>
@@ -16,14 +14,14 @@
 	</nav>
 	<form action="update.php" method="post" autocomplete="off">
 		<?php
-			$nik=$_GET['nik'];
+			$idKaryawan=$_GET['idKaryawan'];
 
-			$sql="SELECT * FROM tablekaryawan WHERE nik='$nik'";
+			$sql="SELECT * FROM tablekaryawan WHERE idKaryawan='$idKaryawan'";
 			$result=$conn->query($sql);
 
 			if($result->num_rows>0){
 				while ($row=$result->fetch_assoc()) {
-					$temp_nik=$row['NIK'];
+					$temp_idKaryawan=$row['idKaryawan'];
                     $temp_nama=$row['nama'];
                     $temp_alamat=$row['alamat'];
                     $temp_email=$row['email'];
@@ -33,12 +31,7 @@
 				}
 			}
 		?>
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="nik">NIK</label>
-			<div class="col-sm-10">
-				<input required type="text" class="form-control" id="nik" value="<?php echo $temp_nik ?>" name="nik">
-			</div>
-		</div>
+		<input type="text" name="idKaryawan" value="<?php echo $temp_idKaryawan ?>" hidden>
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label" for="nama">Nama</label>
 			<div class="col-sm-10">
@@ -86,15 +79,8 @@
 		<button type="submit" class="btn btn-primary buttonSubmit"><i class="fa fa-paper-plane" aria-hidden="true"></i>
 			Submit</button>
 	</form>
+	<?php include 'indexJs.php' ?>
+	<?php include 'script.js' ?>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-</script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-</script>
 
 </html>

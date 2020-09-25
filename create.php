@@ -1,7 +1,6 @@
 <?php
 	include 'connection.php';
 
-	$nik=$_POST['nik'];
     $nama=$_POST['nama'];
     $alamat=$_POST['alamat'];
     $email=$_POST['email'];
