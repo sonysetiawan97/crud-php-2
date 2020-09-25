@@ -8,7 +8,7 @@
     $tanggalLahir=date('Y-m-d', strtotime($_POST['tanggalLahir']));
     $gender=$_POST['gender'];
 
-	$sql= "INSERT INTO tableKaryawan VALUES ('$nik','$nama','$alamat','$email','$tempatLahir','$tanggalLahir','$gender')";
+	$sql= "INSERT INTO tableKaryawan(`nama`, `alamat`, `email`, `tempatLahir`, `tanggalLahir`, `gender`) VALUES ('$nama','$alamat','$email','$tempatLahir','$tanggalLahir','$gender')";
 
 	$conn->query($sql);
 ?>

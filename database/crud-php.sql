@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2020 at 03:48 AM
+-- Generation Time: Sep 25, 2020 at 04:03 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -39,12 +39,19 @@ CREATE TABLE `tablekaryawan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `tablekaryawan`
+--
+
+INSERT INTO `tablekaryawan` (`idKaryawan`, `nama`, `alamat`, `email`, `tempatLahir`, `tanggalLahir`, `gender`) VALUES
+(4, 'Sony Setiawan', 'Duta Bumi 3 Q/22 Harapan Indah, Kota Bekasi', 'sonysetiawanred@gmail.com', 'Jakarta', '1997-09-02', 'Pria');
+
+--
 -- Triggers `tablekaryawan`
 --
 DELIMITER $$
 CREATE TRIGGER `after_insert_ChangeNIK` AFTER INSERT ON `tablekaryawan` FOR EACH ROW INSERT INTO tablenikkaryawan VALUES(
     (SELECT idKaryawan FROM tablekaryawan WHERE idKaryawan = new.idKaryawan),(
-    SELECT CONCAT('k','',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%c')),'',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%m')),'',(SELECT lpad(`idKaryawan`, 5, '0') FROM `tablekaryawan` WHERE idKaryawan = new.idKaryawan)))) FROM tablekaryawan WHERE idKaryawan = new.idKaryawan
+    SELECT CONCAT('k','',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%y')),'',CONCAT((SELECT DATE_FORMAT(CURDATE(), '%m')),'',(SELECT lpad(`idKaryawan`, 5, '0') FROM `tablekaryawan` WHERE idKaryawan = new.idKaryawan)))) FROM tablekaryawan WHERE idKaryawan = new.idKaryawan
 ))
 $$
 DELIMITER ;
@@ -81,6 +88,13 @@ CREATE TABLE `tablenikkaryawan` (
   `idKaryawan` int(11) DEFAULT NULL,
   `nik` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tablenikkaryawan`
+--
+
+INSERT INTO `tablenikkaryawan` (`idKaryawan`, `nik`) VALUES
+(4, 'k90900004');
 
 --
 -- Indexes for dumped tables
@@ -120,7 +134,7 @@ ALTER TABLE `tablenikkaryawan`
 -- AUTO_INCREMENT for table `tablekaryawan`
 --
 ALTER TABLE `tablekaryawan`
-  MODIFY `idKaryawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idKaryawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tablekeahlian`

@@ -3,7 +3,7 @@
 
 	$idKaryawan=$_GET['idKaryawan'];
 
-	mysqli_query($conn, "DELETE CASCADE FROM tableKaryawan WHERE idKaryawan='$idKaryawan'");
+	mysqli_query($conn, "DELETE FROM tableKaryawan WHERE idKaryawan='$idKaryawan'");
 ?>
 <br>
 
